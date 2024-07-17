@@ -26,7 +26,7 @@ app.use(cors());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the Payment Gateway API');
+    res.send('Welcome to the Payment Gateway API-3');
   });
 
 app.post('/verify-payment', async (req, res) => {
