@@ -1,0 +1,142 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "Payment Gateway API documentation",
+      "version": "1.0.0",
+      "title": "Payment Gateway API"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "payments",
+        "description": "Operations about payments"
+      }
+    ],
+    "paths": {
+      "/payments": {
+        "post": {
+          "tags": ["payments"],
+          "summary": "Create a payment",
+          "description": "Create a new payment",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Payment object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Payment"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Payment created"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/payments/{id}/process": {
+        "post": {
+          "tags": ["payments"],
+          "summary": "Process a payment",
+          "description": "Process an existing payment",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Payment processed"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/payments/{id}/status": {
+        "get": {
+          "tags": ["payments"],
+          "summary": "Get payment status",
+          "description": "Retrieve the status of an existing payment",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Payment status retrieved"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/payments/{id}/refund": {
+        "post": {
+          "tags": ["payments"],
+          "summary": "Handle a refund",
+          "description": "Handle a refund for an existing payment",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Refund processed"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Payment": {
+        "type": "object",
+        "required": [
+          "user_id",
+          "amount"
+        ],
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "razorpay_order_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["created", "processed", "refunded"]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+  
