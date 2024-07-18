@@ -2,16 +2,19 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import crypto from 'crypto';
 import config from './config/config.js';
 import Payment from './models/paymentSchema.js';
-import app from './src/app.js';
 import specs from './config/swaggerConfig.js';
+import app from './src/app.js';
+// import paymentRoutes from './routes/paymentRoutes.js';
+
 
 const PORT = process.env.PORT || 3000;
 
+
+// Connect to MongoDB
 mongoose.connect(config.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -19,22 +22,21 @@ mongoose.connect(config.mongoURI, {
 .then(() => console.log('MongoDB connected...'))
 .catch(err => console.error(err));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-
+// Swagger setup
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Payment Gateway API-3');
   });
 
+
+// Routes
 app.post('/verify-payment', async (req, res) => {
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
         console.log('Received data:', req.body);
         const hmac = crypto.createHmac('sha256', config.razorpayKeySecret);
-        hmac.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+        hmac.update(razorpay_order_id + "|" + razorpay_payment_id);
         const generated_signature = hmac.digest('hex');
         console.log('Generated signature:', generated_signature);
         console.log('Razorpay signature:', razorpay_signature);
@@ -65,6 +67,7 @@ app.post('/verify-payment', async (req, res) => {
     }
 });
 
+// Listen on the specified port
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
