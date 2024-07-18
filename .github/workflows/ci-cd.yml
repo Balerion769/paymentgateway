@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: your-username/payment:latest
+          tags: ravi774/payment:latest
 
       - name: Logout from Docker Hub
         run: docker logout
