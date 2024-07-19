@@ -7,6 +7,9 @@ const razorpay = new Razorpay({
   key_secret: config.razorpayKeySecret,
 });
 
+
+
+
 export const createPayment = async (user_id, amount, amount_due) => {
   try {
     const options = {
