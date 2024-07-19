@@ -111,11 +111,11 @@ node server.js
 {
   "status": "success",
   "payment": {
-    "_id": "payment_id",
+    "_id": "order_id",
     "user_id": "user123",
     "amount": 1000,
     "amount_due": 1000,
-    "razorpay_order_id": "order_id",
+    "razorpay_order_id": "razorpay_order_id",
     "status": "created"
   }
 }
@@ -130,11 +130,11 @@ node server.js
 {
   "status": "success",
   "payment": {
-    "_id": "payment_id",
+    "_id": "order_id",
     "user_id": "user123",
     "amount": 1000,
     "amount_due": 1000,
-    "razorpay_order_id": "order_id",
+    "razorpay_order_id": "razorpay_order_id",
     "status": "processed"
   }
 }
@@ -169,11 +169,11 @@ node server.js
 {
   "status": "success",
   "payment": {
-    "_id": "payment_id",
+    "_id": "order_id",
     "user_id": "user123",
     "amount": 1000,
     "amount_due": 0,
-    "razorpay_order_id": "order_id",
+    "razorpay_order_id": "razorpay_order_id",
     "created_at":"date",
     "razorpay_payment_id":"razorpay_payment_id",
     "status": "refunded"
